@@ -4,11 +4,19 @@ metadata:
   name: netflix-app
   labels:
     app: netflix-app
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:ap-south-1:362570697704:certificate/f57f2911-5cee-4010-969c-d4296825c302"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+  - name: http
+    port: 80
     targetPort: 80
     nodePort: 30007
+  - name: https
+    port: 443
+    targetPort: 80
   selector:
     app: netflix-app
